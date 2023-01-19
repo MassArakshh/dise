@@ -1,4 +1,5 @@
 from aiogram import types
+from aiogram.utils.exceptions import CantInitiateConversation
 
 # импорт диспетчера
 from loader import db, bot
@@ -18,18 +19,28 @@ class BotCommands:
     def help(self):
         @db.message_handler(commands=["help"])
         async def help_command(message: types.Message):
-            await message.reply('Учебный Добрый Бот ! Умеет играть !\n'
-                                'Но делает это только в личке 😉\n'
-                                'Вам отправлено приглашение!')
-            await bot.send_message(message.from_user.id, "@" + str(
+            await message.reply('Учебный Добрый Бот. Живет в группе, и помогает как может.\n'
+                                'А еще умеет играть !\n'
+                                'Но делает это только в личке 😉\n')
+            try:
+                await bot.send_message(message.from_user.id, "@" + str(
                 message.from_user.username) + " Играть можно только в личных сообщениях БОТу!\n"
                                               "Хочешь поиграть? Набери сам или жми тут:\n"
                                               "/play")
+            except CantInitiateConversation:
+                await bot.send_message(message.chat.id, "@" + str(message.from_user.username) +
+                                       " Мы еще не знакомы! 😎\n"
+                                       "Сперва надо погворить наедине. 😍\n"
+                                       "Переходи ко мне в privat 😉 по ссылке:\n"
+                                       "https://t.me/Just_The_Test_Bot\n"
+                                       "Когда перейдешь набери команду: /start")
 
     def start(self):
         @db.message_handler(commands=["start"])
         async def start_command(message: types.Message):
-            await message.reply('Привет я Эхо Бот, который играет!')
+            await message.reply("Привет я Эхо Бот, который играет!\n"
+                                "Хочешь поиграть? Набери сам или жми тут:\n"
+                                              "/play")
 
     #  !!! убрать добавление !!! добавляет пользователя в БД и начисляет ботКоины
     def money(self):

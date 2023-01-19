@@ -150,8 +150,8 @@ def select_players():
     data = tbl.execute(sqlstr)
     rows = data.fetchall()
     # кол-во выбранных строк
-    # print(len(rows))
-
+    print(len(rows))
+    print(rows)
 
 def update_player_assets_abs_by_id(player_id, val):
     sqlstr = 'UPDATE PLAYERSDATA set assets_all =' + str(val) + ' WHERE player_id = ' + str(player_id)

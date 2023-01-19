@@ -1,4 +1,5 @@
 from aiogram import types
+from aiogram.utils.exceptions import CantInitiateConversation
 
 # импорт диспетчера
 from loader import db, bot
@@ -41,14 +42,24 @@ class PlayDice:
                 # await bot.send_message(message.from_user.id, "@" + str(message.from_user.username) + ", Привет!")
                 # await message.answer(message.from_user.id, "@" + str(message.from_user.username) + ", Привет!")
                 await message.answer(
-                    "@" + str(message.from_user.username) + " Хотите поиграть?\n"
+                    "@" + str(message.from_user.username) + " Вам исполнилось 10 лет?\n"
+                                                            "Вы в трезвом уме и здравом рассудке?\n"
+                                                            "Сгущенку любите?\n"
                                                             "Напишите: Да или Нет!")
                 await UserState.user_id.set()
             else:
-                await bot.send_message(message.from_user.id, "@" + str(
-                    message.from_user.username) + " Играть можно только в личных сообщениях БОТу!\n"
+                try:
+                    await bot.send_message(message.from_user.id, "@" + str(message.from_user.username) +
+                                                  " Играть можно только в личном чате с БОТом.\n"
                                                   "Хочешь поиграть? Набери сам или жми тут:\n"
                                                   "/play")
+                except CantInitiateConversation:
+                    await bot.send_message(message.chat.id, "@" + str(message.from_user.username) +
+                                              " Мы еще не знакомы! 😎\n"
+                                              "Сперва надо погворить наедине. 😍\n"
+                                              "Переходи ко мне в privat 😉 по ссылке:\n"
+                                              "https://t.me/Just_The_Test_Bot\n"
+                                              "Когда перейдешь набери команду: /start")
 
         cnt3 = IncrementCounter()
 

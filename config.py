@@ -26,4 +26,3 @@ if not bot_token:
 
 # config = Settings()
 
-# Token = '5902008345:AAGIlskH44DFh3ghOEwt72E2dyt_3-gM9lM'
