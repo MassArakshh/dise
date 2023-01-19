@@ -1,9 +1,12 @@
+# import asyncio
 import random
 
 from aiogram import types
 
 # импорт диспетчера
 from loader import db, bot
+
+# import aioschedule
 
 class MessageListner:
     def __int__(self):
@@ -14,7 +17,7 @@ class MessageListner:
         @db.message_handler()
         async def echo_message(message: types.Message):
             expletives = ['скотина', 'идиоты', 'дурак', 'скатина', 'идиот', 'дундук', 'блин', 'козел', 'казел', 'ппрб']
-            expletives2 = ['играем', 'поиграем', 'бот', 'кости', 'скучно', 'кубик', 'игра']
+            expletives2 = ['играем', 'поиграем', 'бот', 'бот!', 'бот.', 'бот?', 'бот,','кости', 'скучно', 'кубик', 'игра']
             expletives3 = ['привет', 'утро', 'доброе', 'hi', 'здравствуй', 'здравствуйте', 'бот']
             expletives4 = ['подключайтесь', 'скрам']
             answers = ["Salut!" ,"Chao!" ,"Alloha! ","Hi! ", "Привет! ","Здравствуй! ", "Здравствуйте!","Хорошая нынче погода! ", "Дарова! ", "Как дела? ", "Как Ваше ничего? ", "Сколько лет! Сколько зим! ", "Разбудили'c меня... "]
@@ -24,8 +27,8 @@ class MessageListner:
                     await message.reply('Не ругайся!')
                 elif word in expletives2:
                     await message.reply(random.choice(answers))
-                    await bot.send_message(message.from_user.id, "@" + str(
-                        message.from_user.username) + " Вы меня звали, и вот он я 😎\n"
+                    await bot.send_message(message.from_user.id, "@" + str(message.from_user.username) +
+                                                      " Вы меня звали, и вот он я 😎\n"
                                                       "Играть можно только в личных сообщениях БОТу!\n"
                                                       "Хочешь поиграть? Набери сам или жми тут:\n"
                                                       "/play")
@@ -36,6 +39,8 @@ class MessageListner:
                     #                        "Или нажми прямо сюда -> /play")
                 elif word in expletives3:
                     await message.reply(random.choice(answers))
+                    print(str(message.chat.id))
+                    print(str(message.from_user.id))
                     # await bot.send_message(message.chat.id, random.choice(answers) + "@" + str(message.from_user.username))
                 elif word in expletives4:
                     await bot.send_message(message.chat.id, "Бегу, уже бегу... " + "@" + str(message.from_user.username))
@@ -56,3 +61,6 @@ class MessageListner:
                     #                        str(message.from_user.username) +
                     #                        ",\nПоиграем? Набери комманду: /play\n"
                     #                        "Или нажми прямо сюда -> /play")
+
+
+

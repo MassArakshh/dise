@@ -1,3 +1,7 @@
+# import asyncio
+# from datetime import datetime
+
+# import aioschedule
 from aiogram import types
 # импторт работы с памятью
 
@@ -5,7 +9,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.utils import executor
 
 # импорт диспетчера и бота
-from loader import db
+from loader import db, on_startup
 
 # импорт готовых обработчиков сообщений
 from bot_commands import BotCommands
@@ -13,7 +17,15 @@ from play_dice import PlayDice
 from messagelistner import MessageListner
 from chatmembers import ChatMembers
 
+# from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
+from scheduller_jobs import scheduler
+
+
 # import asyncio
+
+# import aioschedule
+# -----------------------------------------------------------------------
 
 # -------------------------------------------------------------------------------------------------
 # кнопки
@@ -95,7 +107,78 @@ myPlayDice.playdice()
 
 # обработка текстового сообщения
 myMesListner.echo()
+# myMesListner.time_to_dinner()
+
+# --------------------------------------------------------------------------------------------
+# рассписание работает
+# scheduler = AsyncIOScheduler()
+#
+#
+# async def send_mess_on_dinner(db):
+#     await db.bot.send_message("-1001810695395", "Коллеги, пора на обед!")
+#
+#
+# async def send_mess_on_end_work(db):
+#     await db.bot.send_message("-668882275", "Коллеги, хорошего вечера!\nОля, спокойной ночи!")
+#
+#
+# async def send_mess_on_start_work(db):
+#     await db.bot.send_message("-668882275", "Коллеги, доброе утро !\nОля, добрый день!")
+#
+#
+# async def send_mess_on_scram(db):
+#     await db.bot.send_message("-668882275", "Коллеги, пора на скрам!\nНу, если не сдвинули...")
+#
+#
+# async def send_mess_on_test(db):
+#     await db.bot.send_message("-1001810695395", "Шлю сам бот!")
+#
+#
+# def schedule_jobs():
+#     date_dinner = datetime(2023, 1, 19, 16, 41)
+#     scheduler.add_job(send_mess_on_dinner, "date", run_date=date_dinner, args=(db,))
+#
+#     scheduler.add_job(send_mess_on_end_work, "cron", day_of_week='mon-fri', hour=18, minute=10, end_date='2023-12-31',
+#                       args=(db,))
+#     scheduler.add_job(send_mess_on_start_work, "cron", day_of_week='mon-fri', hour=9, minute=10, end_date='2023-12-31',
+#                       args=(db,))
+#     scheduler.add_job(send_mess_on_scram, "cron", day_of_week='mon-fri', hour=10, minute=28, end_date='2023-12-31',
+#                       args=(db,))
+#
+#     scheduler.add_job(send_mess_on_test, "cron", day_of_week='mon-fri', hour=17, minute=14, end_date='2023-12-31',
+#                       args=(db,))
+
+# async def on_startup(db):
+#     schedule_jobs()
+
+# ----------------------------------------------------------------------------
+
+# mySchedulerJobs = SchedullerJobs()
+
+# scheduler = mySchedulerJobs.scheduler_init()
+
+# async def on_startup(db):
+    # mySchedulerJobs.schedule_jobs(db)
+
+
+# ------------------------------------------------
+# не взлетел
+# @db.message_handler()
+# async def time_to_2():
+#     await bot.send_message(1001810695395, "Коллеги, пора на обед!")
+#
+#
+# async def scheduler():
+#     aioschedule.every().day.at("15:57").do(time_to_2)
+#     while True:
+#         await aioschedule.run_pending()
+#         await asyncio.sleep(1)
+
+# async def on_startup(db):
+#     asyncio.create_task(scheduler())
+
 
 # запуск бота создаем условие, вызываем у executor метод start_polling и передаем в него объект класса диспетчер
 if __name__ == '__main__':
-    executor.start_polling(db)
+    scheduler.start()
+    executor.start_polling(db, on_startup=on_startup)
