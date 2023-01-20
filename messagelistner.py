@@ -2,6 +2,7 @@
 import random
 
 from aiogram import types
+from aiogram.utils.exceptions import CantInitiateConversation
 
 # импорт диспетчера
 from loader import db, bot
@@ -27,12 +28,26 @@ class MessageListner:
                     await message.reply('Не ругайся!')
                 elif word in expletives2:
                     await message.reply(random.choice(answers))
-                    await bot.send_message(message.from_user.id, "@" + str(message.from_user.username) +
-                                                      " Вы меня звали, и вот он я 😎\n"
-                                                      "Играть можно только в личных сообщениях БОТу!\n"
-                                                      "Хочешь поиграть? Набери сам или жми тут:\n"
-                                                      "/play")
-                    # await bot.send_message(message.chat.id, random.choice(answers) +"@" +
+                    try:
+                        await bot.send_message(message.from_user.id, "@" + str(message.from_user.username) +
+                                                          " Вы меня звали, и вот он я 😎\n"
+                                                          "Играть можно только в личных сообщениях БОТу!\n"
+                                                          "Хочешь поиграть? Набери сам или жми тут:\n"
+                                                          "/play")
+                    except CantInitiateConversation:
+                        keyboard = types.InlineKeyboardMarkup()
+                        keyboard.add(
+                            types.InlineKeyboardButton(text="Перейти в личку с БОТом", url="https://t.me/Just_The_Test_Bot"))
+                        keyboard.add()
+                        # await message.answer("Нажми, чтобы отправить...", reply_markup=keyboard)
+                        # await message.answer ("Мы еще не знакомы. 😎\n"
+                        #                       "Приходи ко мне! 😍\n"
+                        #                       "Когда перейдешь набери команду: /start", reply_markup=keyboard)
+                        await bot.send_message(message.chat.id, "@" + str(message.from_user.username) +
+                                               " Мы еще не знакомы! 😎\n"
+                                               "Сперва надо погворить наедине. 😍\n"
+                                               "Когда перейдешь набери команду: /start", reply_markup=keyboard )
+                # await bot.send_message(message.chat.id, random.choice(answers) +"@" +
                     #                        str(message.from_user.username) +
                     #                        ",\nПоиграем?\n"
                     #                        "Набери комманду: /play\n"

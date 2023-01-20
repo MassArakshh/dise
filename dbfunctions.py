@@ -3,17 +3,7 @@ from sqlite3 import DatabaseError
 # from sqlite3 import DatabaseError
 from typing import Any
 
-# tbl2 = sl.connect('players.db')
-
 tbl = sl.connect('playersdata.db')
-
-# from dbfunctions import insert_player
-# from dbfunctions import select_player_assets_by_id
-# from dbfunctions import select_players
-# from dbfunctions import update_player_assets_abs_by_id
-# from dbfunctions import update_player_assets_by_id_up
-# from dbfunctions import update_player_assets_by_id_down
-
 
 def create_table():
     # CREATE TABLE IF NOT EXISTS PLAYERSTBL - проверить что работает

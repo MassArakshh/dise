@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.utils.exceptions import CantInitiateConversation
 
 # импорт диспетчера
-from loader import db, bot
+from loader import db, bot, str_weather
 
 # импорт ф-ий бд
 from dbfunctions import update_player_assets_by_id_up, select_player_assets_plays_by_id
@@ -11,7 +11,7 @@ from dbfunctions import update_player_assets_by_id_up, select_player_assets_play
 # from dbfunctions import update_player_assets_by_id_down
 
 class BotCommands:
-    def __int__(self):
+    def __init__(self):
         self.start()
         self.help()
         self.money()
@@ -19,9 +19,14 @@ class BotCommands:
     def help(self):
         @db.message_handler(commands=["help"])
         async def help_command(message: types.Message):
+            keyboard = types.InlineKeyboardMarkup()
+            keyboard.add(
+                types.InlineKeyboardButton(text="Перейти в личку с БОТом", url="https://t.me/Just_The_Test_Bot"))
+            keyboard.add()
+
             await message.reply('Учебный Добрый Бот. Живет в группе, и помогает как может.\n'
                                 'А еще умеет играть !\n'
-                                'Но делает это только в личке 😉\n')
+                                'Но делает это только в личке 😉\n\n' + str_weather, reply_markup=keyboard)
             try:
                 await bot.send_message(message.from_user.id, "@" + str(
                 message.from_user.username) + " Играть можно только в личных сообщениях БОТу!\n"
@@ -31,9 +36,7 @@ class BotCommands:
                 await bot.send_message(message.chat.id, "@" + str(message.from_user.username) +
                                        " Мы еще не знакомы! 😎\n"
                                        "Сперва надо погворить наедине. 😍\n"
-                                       "Переходи ко мне в privat 😉 по ссылке:\n"
-                                       "https://t.me/Just_The_Test_Bot\n"
-                                       "Когда перейдешь набери команду: /start")
+                                       "Когда перейдешь набери команду: /start", reply_markup=keyboard)
 
     def start(self):
         @db.message_handler(commands=["start"])

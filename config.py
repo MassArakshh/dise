@@ -1,16 +1,23 @@
 # t.me/Just_The_Test_Bot
+# Run -> Edit Configurations и добавьте в окне Environment Variables переменную с именем BOT_TOKEN , WEATHER_API_KEY и значением токена.
 
-# Run -> Edit Configurations и добавьте в окне Environment Variables переменную с именем BOT_TOKEN и значением токена.
-# from pydantic import BaseSettings, SecretStr
-
-# import logging
-# from aiogram import Bot, Dispatcher, executor, types
 from os import getenv
 from sys import exit
 
 bot_token = getenv("BOT_TOKEN")
 if not bot_token:
     exit("No Token")
+
+WEATHER_API_KEY = getenv("WEATHER_API_KEY")
+if not WEATHER_API_KEY:
+    exit("No WEATHER_API_KEY")
+
+CURRENT_WEATHER_API_CALL = (
+        'https://api.openweathermap.org/data/2.5/weather?'
+        'lat={latitude}&lon={longitude}&'
+        'appid=' + WEATHER_API_KEY + '&units=metric'
+)
+
 
 # !!! не взлетает !!!!
 
