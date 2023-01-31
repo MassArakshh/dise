@@ -4,7 +4,7 @@
 
 import sqlite3 as sl
 from sqlite3 import DatabaseError
-from typing import Any
+# from typing import Any
 
 
 class DataBase:
@@ -44,7 +44,7 @@ class DataBase:
 
         # def insert_player (tbl ,entities):
 
-    def insert_player_short(self, entities: tuple[int, str | Any, int, int, int]):
+    def insert_player_short(self, entities: [int, str , int, int, int]):
         with self.tbl:
             sqlstr = 'INSERT INTO PLAYERSDATA (player_id, player_name, assets_all, plays_all, plays_on) values(?, ?, ?, ?, ?)'
             try:
@@ -57,7 +57,7 @@ class DataBase:
             return res
 
     def insert_player_full(self,
-                           entities: tuple[int, str | Any, int, int, int, int, int, int, int, str | Any, str | Any]):
+                           entities: [int, str , int, int, int, int, int, int, int, str , str ]):
         with self.tbl:
             sqlstr = 'INSERT INTO PLAYERSDATA (player_id, player_name, assets_all, plays_all, plays_on, bet_current, field1, field2, field3, field4, field5) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
             try:

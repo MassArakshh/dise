@@ -19,13 +19,13 @@ import json
 from dataclasses import dataclass
 # from datetime import datetime
 from enum import IntEnum
-from typing import TypeAlias
+# from typing import TypeAlias # не работает на python 8
 from urllib.request import urlopen
 
 import config
 from coordinates import Coordinates
 
-Celsius: TypeAlias = float
+# Celsius: TypeAlias = float # не работает на python 8
 
 
 class WindDirection(IntEnum):
@@ -39,11 +39,12 @@ class WindDirection(IntEnum):
     Northwest = 315
 
 
-@dataclass(slots=True, frozen=True)
+# @dataclass(slots=True, frozen=True) # не работает на python 8
+@dataclass()
 class Weather:
     location: str
-    temperature: Celsius
-    temperature_feeling: Celsius
+    temperature: float #Celsius # не работает на python 8
+    temperature_feeling: float #Celsius # не работает на python 8
     description: str
     wind_speed: float
     wind_direction: str

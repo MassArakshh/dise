@@ -1,7 +1,7 @@
 import sqlite3 as sl
 from sqlite3 import DatabaseError
 # from sqlite3 import DatabaseError
-from typing import Any
+# from typing import Any
 
 tbl = sl.connect('playersdata.db')
 
@@ -37,7 +37,7 @@ def create_table_new():
 
     # def insert_player (tbl ,entities):
 
-def insert_player_short(entities: tuple[int, str | Any, int, int, int]):
+def insert_player_short(entities: [int, str , int, int, int]):
     sqlstr = 'INSERT INTO PLAYERSDATA (player_id, player_name, assets_all, plays_all, plays_on) values(?, ?, ?, ?, ?)'
     try:
         tbl.execute(sqlstr, entities)
@@ -49,7 +49,7 @@ def insert_player_short(entities: tuple[int, str | Any, int, int, int]):
     return res
 
 # ! доделать!!!
-def insert_player_full(entities: tuple[int, str | Any, int, int, int, int, int, int, int, str | Any, str | Any]):
+def insert_player_full(entities: [int, str , int, int, int, int, int, int, int, str , str ]):
     sqlstr = 'INSERT INTO PLAYERSDATA (player_id, player_name, assets_all, plays_all, plays_on, bet_current, field1, field2, field3, field4, field5) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     try:
         tbl.execute(sqlstr, entities)
@@ -211,8 +211,8 @@ def update_player_data(player_id, val):
 #        tbl.execute("DROP TABLE IF EXISTS PLAYERSDATA")
 #        create_table_new()
 
-#     entities_full: tuple[int, str | Any, int, int, int, int, int, int, int, str | Any, str | Any] = (1111, "Test", 0, 0, 0, 0, 0, 0, 0, " ", " ")
-#     entities_short: tuple[int, str | Any, int, int, int] = (1111, "Test", 0, 0, 0)
+#     entities_full: [int, str , int, int, int, int, int, int, int, str , str ] = (1111, "Test", 0, 0, 0, 0, 0, 0, 0, " ", " ")
+#     entities_short: [int, str , int, int, int] = (1111, "Test", 0, 0, 0)
 #
 #     insert_player_short(entities_short)
     # insert_player_full(entities_full)

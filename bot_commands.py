@@ -50,7 +50,7 @@ class BotCommands:
             user_id = message.from_user.id
             user_name = "@" + message.from_user.username
             # добавим пользователя в БД и ему 100 БотКов
-            # entities: tuple[Any, str | Any, int, int, int] = (user_id, user_name, 0, 0, 0)
+            # entities: tuple[Any, str , int, int, int] = (user_id, user_name, 0, 0, 0)
             # insert_player_short(entities)
             # добавим денег ему
             data_db = select_player_assets_plays_by_id(user_id)
