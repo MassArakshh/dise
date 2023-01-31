@@ -44,8 +44,7 @@ class PlayDice:
         @self.db.message_handler(commands=["play"])
         async def user_register(message: types.Message):
             keyboard = types.InlineKeyboardMarkup()
-            keyboard.add(
-                types.InlineKeyboardButton(text="Перейти в личку с БОТом", url="https://t.me/Just_The_Test_Bot"))
+            keyboard.add(types.InlineKeyboardButton(text="Перейти в личку с БОТом", url="https://t.me/Just_The_Test_Bot"))
             keyboard.add()
 
             # проверяем личный чат или нет

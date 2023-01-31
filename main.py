@@ -1,8 +1,3 @@
-# from aiogram import types
-# импторт работы с памятью
-
-# from aiogram.dispatcher.filters import Text
-
 import loader
 # импорт диспетчера и бота
 from loader import db, bot
@@ -14,7 +9,7 @@ from messagelistner import MessageListner
 from chatmembers import ChatMembers
 
 
-myBotCommands = BotCommands()
+myBotCommands = BotCommands(db, bot)
 myPlayDice = PlayDice(db, bot)
 myMesListner = MessageListner()
 myNewChatMember = ChatMembers(db, bot)
@@ -22,6 +17,7 @@ myNewChatMember = ChatMembers(db, bot)
 # команды бота
 myBotCommands.start()
 myBotCommands.help()
+
 # добавить пользоваеля и ему денег
 myBotCommands.money()
 
@@ -35,6 +31,12 @@ myPlayDice.playdice()
 myMesListner.echo()
 
 
+
+
+
+
+# myScrapper = Scrapper(db, bot, myCl)
+# myScrapper.scrap()
 
 
 
