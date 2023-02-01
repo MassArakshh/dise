@@ -1,10 +1,11 @@
 from aiogram import types
 from aiogram.utils.exceptions import CantInitiateConversation
 # импорт диспетчера
-from loader import str_weather
+# from loader import str_weather
 
 # импорт ф-ий бд
 from dbfunctions import update_player_assets_by_id_up, select_player_assets_plays_by_id
+from get_weather import str_weather_global
 
 
 # from dbfunctions import update_player_assets_by_id_down
@@ -13,6 +14,7 @@ class BotCommands:
     def __init__(self, db, bot):
         self.db = db
         self.bot = bot
+        # self.str_weather = StrWeather.str_weather
 
     def help(self):
         @self.db.message_handler(commands=["help"])
@@ -24,7 +26,7 @@ class BotCommands:
 
             await message.reply('Учебный Добрый Бот. Живет в группе, и помогает как может.\n'
                                 'А еще умеет играть !\n'
-                                'Но делает это только в личке 😉\n\n' + str_weather, reply_markup=keyboard)
+                                'Но делает это только в личке 😉\n\n' + str_weather_global, reply_markup=keyboard)
             try:
                 await self.bot.send_message(message.from_user.id, "@" + str(
                     message.from_user.username) + " Играть можно только в личных сообщениях БОТу!\n"

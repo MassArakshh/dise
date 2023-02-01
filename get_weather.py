@@ -23,7 +23,8 @@ from enum import IntEnum
 from urllib.request import urlopen
 
 import config
-from coordinates import Coordinates
+from coordinates import Coordinates, CoordinatesR, CoordinatesN, CoordinatesP
+
 
 # Celsius: TypeAlias = float # не работает на python 8
 
@@ -43,8 +44,8 @@ class WindDirection(IntEnum):
 @dataclass()
 class Weather:
     location: str
-    temperature: float #Celsius # не работает на python 8
-    temperature_feeling: float #Celsius # не работает на python 8
+    temperature: float  # Celsius # не работает на python 8
+    temperature_feeling: float  # Celsius # не работает на python 8
     description: str
     wind_speed: float
     wind_direction: str
@@ -102,3 +103,46 @@ def _parse_wind_direction(openweather_dict: dict) -> str:
     if degrees == 360:
         degrees = 0
     return WindDirection(degrees).name
+
+
+
+str_weather_global: str = ''
+@dataclass()
+class StrWeather:
+    str_weather: str = ''
+
+
+class GetWeather:
+
+    def __init__(self):
+        self.weather_r()
+        self.weather_n()
+        self.weather_p()
+        self.str_weather = ''
+
+    def weather_r(self):
+        """Returns a message about the temperature and weather description"""
+        wthr = get_weather(coordinates=CoordinatesR)
+        return f'{wthr.location}, {wthr.description}\n' \
+               f'Temp: {wthr.temperature}°C, feels like: {wthr.temperature_feeling}°C\n' \
+               f'Wind: {wthr.wind_direction}, {wthr.wind_speed} m/s'
+
+    def weather_n(self):
+        """Returns a message about the temperature and weather description"""
+        wthr = get_weather(coordinates=CoordinatesN)
+        return f'{wthr.location}, {wthr.description}\n' \
+               f'Temp: {wthr.temperature}°C, feels like: {wthr.temperature_feeling}°C\n' \
+               f'Wind: {wthr.wind_direction}, {wthr.wind_speed} m/s'
+
+    def weather_p(self):
+        """Returns a message about the temperature and weather description"""
+        wthr = get_weather(coordinates=CoordinatesP)
+        return f'{wthr.location}(Питер поймет 😉), {wthr.description}\n' \
+               f'Temp: {wthr.temperature}°C, feels like: {wthr.temperature_feeling}°C\n' \
+               f'Wind: {wthr.wind_direction}, {wthr.wind_speed} m/s'
+
+    def weather(self):
+        self.str_weather = f'{self.weather_r()}\n\n{self.weather_n()}\n\n{self.weather_p()}\n'
+        StrWeather(str_weather=self.str_weather)
+        str_weather_global = self.str_weather
+        return self.str_weather
